@@ -1,0 +1,59 @@
+{
+  "name": "token-count-status",
+  "displayName": "Token Count Status",
+  "description": "Shows the token count for the active file in the VS Code status bar.",
+  "version": "0.0.1",
+  "publisher": "local",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Token Count Status",
+      "properties": {
+        "tokenCountStatus.model": {
+          "type": "string",
+          "default": "gpt-5-mini",
+          "enum": [
+            "gpt-5",
+            "gpt-5-mini",
+            "gpt-5-nano",
+            "gpt-4.1",
+            "gpt-4.1-mini",
+            "gpt-4o",
+            "o4-mini",
+            "gpt-4-turbo",
+            "gpt-3.5-turbo"
+          ],
+          "description": "Model used to select the tokenizer for token counting."
+        },
+        "tokenCountStatus.showForAllFiles": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show token counts for every file instead of only agent-oriented markdown files like AGENTS.md and CLAUDE.md."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "vscode:prepublish": "npm run compile"
+  },
+  "dependencies": {
+    "js-tiktoken": "^1.0.21"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "@types/vscode": "^1.90.0",
+    "typescript": "^5.5.4"
+  }
+}
