@@ -2,6 +2,8 @@
 
 This VS Code extension shows the token count for the active editor in the status bar.
 
+It supports OpenAI-family models through `js-tiktoken` and Claude models through Anthropic's local tokenizer package.
+
 ## Settings
 
 - `tokenCountStatus.model`: chooses which model tokenizer to use.

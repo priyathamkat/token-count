@@ -1,5 +1,6 @@
 import * as path from "node:path";
 import * as vscode from "vscode";
+import { countTokens as countAnthropicTokens } from "@anthropic-ai/tokenizer";
 import {
   encodingForModel,
   getEncoding,
@@ -77,7 +78,7 @@ export function activate(context: vscode.ExtensionContext): void {
       }
 
       void vscode.window.showInformationMessage(
-        `${filename}: ${formatNumber(info.count)} tokens using ${config.model} (${info.encodingName}).`
+        `${filename}: ${formatNumber(info.count)} tokens using ${config.model} (${info.tokenizerName}).`
       );
     }),
     vscode.window.onDidChangeActiveTextEditor(() => updateStatusBar()),
@@ -142,7 +143,7 @@ function updateStatusBar(): void {
   statusBarItem.text = `$(symbol-number) Tokens: ${formatNumber(info.count)}`;
   statusBarItem.tooltip = [
     `Model: ${info.model}`,
-    `Encoding: ${info.encodingName}`,
+    `Tokenizer: ${info.tokenizerName}`,
     `File: ${editor.document.fileName}`
   ].join("\n");
   statusBarItem.show();
@@ -151,7 +152,7 @@ function updateStatusBar(): void {
 function getTokenCount(document: vscode.TextDocument, config: ExtensionConfig): {
   visible: boolean;
   count?: number;
-  encodingName?: string;
+  tokenizerName?: string;
   model: string;
   message?: string;
 } {
@@ -163,11 +164,11 @@ function getTokenCount(document: vscode.TextDocument, config: ExtensionConfig): 
   }
 
   try {
-    const { tokenizer, encodingName } = getTokenizer(config.model);
+    const { count, tokenizerName } = countTokensForModel(document.getText(), config.model);
     return {
       visible: true,
-      count: tokenizer.encode(document.getText()).length,
-      encodingName,
+      count,
+      tokenizerName,
       model: config.model
     };
   } catch (error) {
@@ -195,6 +196,21 @@ function shouldShowForDocument(document: vscode.TextDocument, config: ExtensionC
   return AGENT_MARKDOWN_BASENAMES.has(path.basename(document.fileName).toLowerCase());
 }
 
+function countTokensForModel(text: string, model: string): { count: number; tokenizerName: string } {
+  if (isAnthropicModel(model)) {
+    return {
+      count: countAnthropicTokens(text),
+      tokenizerName: "anthropic-claude"
+    };
+  }
+
+  const { tokenizer, encodingName } = getTokenizer(model);
+  return {
+    count: tokenizer.encode(text).length,
+    tokenizerName: encodingName
+  };
+}
+
 function getTokenizer(model: string): { tokenizer: Tiktoken; encodingName: string } {
   const normalizedModel = model.trim();
   const cached = tokenizerCache.get(normalizedModel);
@@ -218,6 +234,10 @@ function getTokenizer(model: string): { tokenizer: Tiktoken; encodingName: strin
     tokenizerCache.set(normalizedModel, resolved);
     return resolved;
   }
+}
+
+function isAnthropicModel(model: string): boolean {
+  return model.trim().toLowerCase().startsWith("claude-");
 }
 
 function getEncodingNameForModelFallback(model: string): TiktokenEncoding {
