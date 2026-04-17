@@ -4,6 +4,10 @@ This VS Code extension shows the token count for the active editor in the status
 
 It supports OpenAI-family models through `js-tiktoken` and Claude models through Anthropic's local tokenizer package.
 
+## Anthropic Note
+
+Claude model support uses `@anthropic-ai/tokenizer` for local counting. That package appears to be outdated relative to Anthropic's current model lineup, so Claude token counts in this extension should be treated as best effort rather than authoritative.
+
 ## Settings
 
 - `tokenCountStatus.model`: chooses which model tokenizer to use.

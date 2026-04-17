@@ -13,6 +13,10 @@ The extension lives in [vscode](/Users/priyatham/Developer/token-count/vscode).
 - Supports Anthropic Claude models through `@anthropic-ai/tokenizer`.
 - Can be configured to show counts for all files or only common agent-oriented markdown files such as `AGENTS.md` and `CLAUDE.md`.
 
+### Anthropic Note
+
+Anthropic model support uses `@anthropic-ai/tokenizer` for local counting. That package appears to be outdated relative to Anthropic's current model lineup, so Claude token counts shown by this extension should be treated as best effort rather than authoritative.
+
 ### Settings
 
 - `tokenCountStatus.model`: selects the tokenizer/model family used for counting.
