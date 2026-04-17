@@ -3,18 +3,39 @@
   "displayName": "Token Count Status",
   "description": "Shows the token count for the active file in the VS Code status bar.",
   "version": "0.0.1",
-  "publisher": "local",
+  "publisher": "priyathamkat",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/priyathamkat/token-count.git"
+  },
+  "homepage": "https://github.com/priyathamkat/token-count/tree/main/vscode",
+  "bugs": {
+    "url": "https://github.com/priyathamkat/token-count/issues"
+  },
   "engines": {
     "vscode": "^1.90.0"
   },
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "tokens",
+    "tokenizer",
+    "openai",
+    "anthropic",
+    "claude",
+    "statusbar",
+    "markdown"
+  ],
   "activationEvents": [
     "onStartupFinished"
   ],
   "main": "./out/extension.js",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
   "contributes": {
     "configuration": {
       "title": "Token Count Status",
@@ -58,7 +79,8 @@
   "scripts": {
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "vscode:prepublish": "npm run compile"
+    "vscode:prepublish": "npm run compile",
+    "package": "vsce package"
   },
   "dependencies": {
     "@anthropic-ai/tokenizer": "^0.0.4",
@@ -67,6 +89,7 @@
   "devDependencies": {
     "@types/node": "^20.14.10",
     "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.6.2",
     "typescript": "^5.5.4"
   }
 }
