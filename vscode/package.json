@@ -33,7 +33,7 @@
             "gpt-4-turbo",
             "gpt-3.5-turbo"
           ],
-          "description": "Model used to select the tokenizer for token counting."
+          "description": "Model used to select the tokenizer for counting tokens."
         },
         "tokenCountStatus.showForAllFiles": {
           "type": "boolean",
