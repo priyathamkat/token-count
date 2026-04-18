@@ -4,7 +4,8 @@
   "description": "Shows the token count for the active file in the VS Code status bar.",
   "version": "0.0.1",
   "publisher": "priyathamkat",
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "icon": "assets/icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/priyathamkat/token-count.git"
@@ -80,7 +81,8 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "vscode:prepublish": "npm run compile",
-    "package": "vsce package"
+    "package": "vsce package",
+    "package:dry-run": "vsce package --no-dependencies --allow-star-activation"
   },
   "dependencies": {
     "@anthropic-ai/tokenizer": "^0.0.4",
