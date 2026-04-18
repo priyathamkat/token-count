@@ -2,7 +2,7 @@
   "name": "token-count-status",
   "displayName": "Token Count Status",
   "description": "Shows the token count for the active file in the VS Code status bar.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "priyathamkat",
   "license": "SEE LICENSE IN LICENSE.md",
   "icon": "assets/icon.png",
